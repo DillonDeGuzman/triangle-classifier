@@ -1,3 +1,5 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/AzFYMT5aGW6W8wRBgJHgCs/16KQGiTu69EUWdTaNDwd3m/tree/HW-03b_Mocking.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/AzFYMT5aGW6W8wRBgJHgCs/16KQGiTu69EUWdTaNDwd3m/tree/HW-03b_Mocking)
+
 # triangle-classifier
 
 ## HW 03b — Mocking GitHub API Calls
