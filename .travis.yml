@@ -2,10 +2,12 @@ language: python
 
 python:
   - "3.12"
-  
+
 install:
   - pip install -r GitHubApi-hw03a/requirements.txt
 
 script:
   - python -m unittest -v test_triangle.py
   - python -m unittest -v GitHubApi-hw03a/TestGithubApi.py
+
+# Trigger Travis build
