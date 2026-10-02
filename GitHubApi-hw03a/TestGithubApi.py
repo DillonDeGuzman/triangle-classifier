@@ -6,10 +6,11 @@ from GithubApi import get_repo_commit_counts
 
 
 class TestGithubApi(unittest.TestCase):
+    """Unit tests that mock all GitHub API requests."""
 
     @patch("GithubApi.requests.get")
     def test_two_repositories_with_commits(self, mock_get):
-        """Test two repositories with known numbers of commits."""
+        """Return known repository names and known commit totals."""
         repositories_response = Mock()
         repositories_response.raise_for_status.return_value = None
         repositories_response.json.return_value = [
@@ -43,22 +44,28 @@ class TestGithubApi(unittest.TestCase):
             "Repo: Square567 Number of commits: 2"
         ]
 
-        self.assertEqual(get_repo_commit_counts("John567"), expected)
+        actual = get_repo_commit_counts("John567")
+
+        self.assertEqual(actual, expected)
+        self.assertEqual(mock_get.call_count, 3)
 
     @patch("GithubApi.requests.get")
     def test_user_with_no_repositories(self, mock_get):
-        """Test an empty repository response."""
+        """Return an empty result for a user with no repositories."""
         repositories_response = Mock()
         repositories_response.raise_for_status.return_value = None
         repositories_response.json.return_value = []
 
         mock_get.return_value = repositories_response
 
-        self.assertEqual(get_repo_commit_counts("NoReposUser"), [])
+        actual = get_repo_commit_counts("NoReposUser")
+
+        self.assertEqual(actual, [])
+        self.assertEqual(mock_get.call_count, 1)
 
     @patch("GithubApi.requests.get")
     def test_repository_with_no_commits(self, mock_get):
-        """Test that a repository with no commits returns zero."""
+        """Return zero for a repository whose mock commit list is empty."""
         repositories_response = Mock()
         repositories_response.raise_for_status.return_value = None
         repositories_response.json.return_value = [
@@ -78,14 +85,20 @@ class TestGithubApi(unittest.TestCase):
             "Repo: EmptyRepository Number of commits: 0"
         ]
 
-        self.assertEqual(get_repo_commit_counts("TestUser"), expected)
+        actual = get_repo_commit_counts("TestUser")
+
+        self.assertEqual(actual, expected)
+        self.assertEqual(mock_get.call_count, 2)
 
     @patch("GithubApi.requests.get")
-    def test_github_request_error(self, mock_get):
-        """Test that a request failure does not crash the function."""
-        mock_get.side_effect = requests.RequestException("Network problem")
+    def test_request_error_returns_empty_list(self, mock_get):
+        """Handle a mocked GitHub or network request error."""
+        mock_get.side_effect = requests.RequestException("Mocked network problem")
 
-        self.assertEqual(get_repo_commit_counts("BadUser"), [])
+        actual = get_repo_commit_counts("BadUser")
+
+        self.assertEqual(actual, [])
+        self.assertEqual(mock_get.call_count, 1)
 
 
 if __name__ == "__main__":
