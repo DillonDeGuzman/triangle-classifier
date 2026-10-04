@@ -39,3 +39,12 @@ def test_invalid_triangle_zero_side():
 
 def test_invalid_triangle_too_short():
     assert classify_triangle(1, 1, 3) == "Not a triangle"
+
+def test_main_runs(capsys):
+    """Verify that the example program prints its triangle results."""
+    import triangle
+
+    triangle.main()
+
+    captured = capsys.readouterr()
+    assert "(3, 3, 3): Equilateral" in captured.out

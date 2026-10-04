@@ -1,7 +1,10 @@
+"""Classify triangles according to side lengths and right-angle status."""
+
 import math
 
 
 def classify_triangle(a, b, c):
+    """Return the classification of a triangle with sides a, b, and c."""
     if a <= 0 or b <= 0 or c <= 0:
         return "Not a triangle"
 
@@ -25,13 +28,14 @@ def classify_triangle(a, b, c):
 
 
 def main():
+    """Print classifications for several sample triangles."""
     examples = [
         (3, 3, 3),
         (4, 4, 5),
         (4, 5, 6),
         (3, 4, 5),
         (1, 2, 3),
-        (0, 4, 5)
+        (0, 4, 5),
     ]
 
     for a, b, c in examples:
